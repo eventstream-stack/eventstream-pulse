@@ -141,6 +141,7 @@ JAZZMIN_SETTINGS = {
     'related_modal_active': True,
     'use_google_fonts_cdn': True,
     'changeform_format': 'horizontal_tabs',
+    'show_ui_builder': True,
 }
 
 JAZZMIN_UI_TWEAKS = {
