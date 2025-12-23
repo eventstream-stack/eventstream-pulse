@@ -1,15 +1,13 @@
-<div style="display: flex; align-items: center; gap: 8px;">
+<div style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: nowrap !important;">
     <input type="color"
-           class="color-swatch"
-           id="{{ widget.attrs.id }}_picker"
+           id="id_{{ widget.name }}_picker"
            value="{% if widget.value %}{{ widget.value }}{% else %}#FFFFFF{% endif %}"
-           onchange="var txt = document.getElementById('{{ widget.attrs.id }}'); txt.value = this.value; txt.dispatchEvent(new Event('input', {bubbles: true})); txt.dispatchEvent(new Event('change', {bubbles: true}));"
-           style="width: 36px; height: 36px; padding: 2px; border: 2px solid #ccc; border-radius: 6px; cursor: pointer; background: none;">
+           onchange="var txt = document.getElementById('id_{{ widget.name }}'); if(txt) { txt.value = this.value; txt.dispatchEvent(new Event('input', {bubbles: true})); txt.dispatchEvent(new Event('change', {bubbles: true})); }">
     <input type="text"
            name="{{ widget.name }}"
-           id="{{ widget.attrs.id }}"
+           id="id_{{ widget.name }}"
            value="{% if widget.value %}{{ widget.value }}{% endif %}"
            placeholder="#FFFFFF"
-           style="width: 90px; padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px;"
-           oninput="var picker = document.getElementById('{{ widget.attrs.id }}_picker'); if(/^#[0-9A-Fa-f]{6}$/i.test(this.value)) picker.value = this.value;">
+           style="width: 100px !important; padding: 8px !important; border: 1px solid #ced4da !important; border-radius: 4px !important; font-family: monospace !important;"
+           oninput="var picker = document.getElementById('id_{{ widget.name }}_picker'); if(picker && /^#[0-9A-Fa-f]{6}$/i.test(this.value)) picker.value = this.value;">
 </div>

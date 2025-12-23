@@ -151,115 +151,133 @@
 }
 
 /* ========================================
-   Consistent form field alignment
+   Color picker styling
    ======================================== */
 
-/* Base styles for all paired field rows */
-.form-group[class*="field-"][class*="field-"] > .row {
-    display: grid !important;
-    grid-template-columns: 130px 1fr 130px 1fr;
-    gap: 16px;
-    align-items: start;
+/* Style the color input to look like a proper color picker */
+input[type="color"] {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 2px !important;
+    border: 2px solid #ccc !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    background: transparent !important;
+    vertical-align: middle;
 }
 
-.form-group[class*="field-"] > .row > [class*="col-"] {
-    width: auto !important;
-    max-width: none !important;
-    flex: none !important;
-    padding: 0 !important;
+input[type="color"]:hover {
+    border-color: #007bff !important;
 }
 
-/* Labels should be consistent */
-.form-group label {
-    font-weight: 500;
-    min-width: 100px;
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 2px;
 }
 
-/* Single field rows (like background_color, image_url) */
-.form-group.field-background_color:not([class*=" field-"]) > .row,
-.form-group.field-image_url:not([class*=" field-"]) > .row,
-.form-group.field-target_apps:not([class*=" field-"]) > .row,
-.form-group.field-is_active:not([class*=" field-"]) > .row {
-    display: grid !important;
-    grid-template-columns: 130px 1fr;
-    gap: 16px;
-    align-items: start;
-}
-
-/* Color field rows - paired */
-.form-group.field-title.field-title_color > .row,
-.form-group.field-body.field-body_color > .row,
-.form-group.field-button_color.field-button_text_color > .row {
-    grid-template-columns: 130px 1fr 130px 200px;
-}
-
-/* CTA fields */
-.form-group.field-cta_text.field-cta_action > .row {
-    grid-template-columns: 130px 1fr 130px 1fr;
-}
-
-/* Appearance fields */
-.form-group.field-message_type.field-banner_position > .row,
-.form-group.field-priority.field-is_dismissible > .row,
-.form-group.field-start_date.field-end_date > .row {
-    grid-template-columns: 130px 1fr 130px 1fr;
-}
-
-/* ========================================
-   Color field fieldBox - flex for inline picker
-   ======================================== */
-.fieldBox.field-title_color,
-.fieldBox.field-body_color,
-.fieldBox.field-button_color,
-.fieldBox.field-background_color {
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: nowrap;
-}
-
-/* Constrain color text input width */
-.fieldBox.field-title_color input[type="text"],
-.fieldBox.field-body_color input[type="text"],
-.fieldBox.field-button_color input[type="text"],
-.fieldBox.field-background_color input[type="text"] {
-    width: 100px !important;
-    min-width: 80px;
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
 }
 
 /* Hide verbose help text on color fields */
 .fieldBox.field-title_color .help-block,
 .fieldBox.field-body_color .help-block,
 .fieldBox.field-button_color .help-block,
+.fieldBox.field-button_text_color .help-block,
 .fieldBox.field-background_color .help-block {
     display: none;
 }
 
 /* ========================================
-   Color picker swatch styling
+   Fix Django selector widget (target_apps)
+   Bootstrap grid interferes with admin CSS
+   Using high-specificity selectors to override Jazzmin
    ======================================== */
-input[type="color"].color-swatch {
-    width: 32px !important;
-    height: 32px !important;
-    padding: 0;
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    cursor: pointer;
-    flex-shrink: 0;
-    background: none;
+.form-group .field-target_apps,
+.col-sm-7.field-target_apps,
+div.field-target_apps {
+    width: 100% !important;
+    max-width: none !important;
+    flex: 0 0 100% !important;
 }
 
-input[type="color"].color-swatch:hover {
-    border-color: #007bff;
+/* Force horizontal layout on selector */
+.related-widget-wrapper .selector,
+.field-target_apps .selector,
+div.selector {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    align-items: flex-start !important;
+    width: 100% !important;
 }
 
-input[type="color"].color-swatch::-webkit-color-swatch-wrapper {
-    padding: 2px;
+/* Size the available/chosen boxes - fill container */
+.related-widget-wrapper .selector-available,
+.related-widget-wrapper .selector-chosen,
+div.selector .selector-available,
+div.selector .selector-chosen {
+    flex: 1 1 45% !important;
+    min-width: 200px !important;
+    max-width: 45% !important;
 }
 
-input[type="color"].color-swatch::-webkit-color-swatch {
-    border: none;
-    border-radius: 4px;
+/* Size the select elements */
+.related-widget-wrapper .selector select,
+div.selector select {
+    width: 100% !important;
+    min-width: 200px !important;
+    height: 180px !important;
+}
+
+/* Style the chooser arrows column */
+.selector-chooser {
+    flex: 0 0 60px !important;
+    padding: 40px 5px !important;
+}
+
+/* Square arrow buttons with arrow icons */
+.selector-chooser .selector-add,
+.selector-chooser .selector-remove {
+    width: 40px !important;
+    height: 40px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    background: #f8f9fa !important;
+    cursor: pointer !important;
+    font-size: 0 !important; /* Hide text */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+}
+
+/* Add arrow icons */
+.selector-chooser .selector-add::after {
+    content: "▶" !important;
+    font-size: 16px !important;
+    color: #333 !important;
+    display: block !important;
+}
+
+.selector-chooser .selector-remove::after {
+    content: "◀" !important;
+    font-size: 16px !important;
+    color: #333 !important;
+    display: block !important;
+}
+
+.selector-chooser .selector-add:hover:not(:disabled),
+.selector-chooser .selector-remove:hover:not(:disabled) {
+    background: #e2e6ea !important;
+    border-color: #007bff !important;
+}
+
+.selector-chooser .selector-add:disabled,
+.selector-chooser .selector-remove:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
 }
 
 /* ========================================
