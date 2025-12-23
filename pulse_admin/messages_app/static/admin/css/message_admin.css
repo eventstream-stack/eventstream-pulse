@@ -151,92 +151,58 @@
 }
 
 /* ========================================
-   FIX: Paired field rows using CSS Grid
-   Only apply to rows with TWO fields (has two field- classes)
+   Consistent form field alignment
    ======================================== */
 
-/* Title + Title Color row */
-.form-group.field-title.field-title_color > .row {
+/* Base styles for all paired field rows */
+.form-group[class*="field-"][class*="field-"] > .row {
     display: grid !important;
-    grid-template-columns: 120px 1fr 100px 180px;
-    gap: 12px;
+    grid-template-columns: 130px 1fr 130px 1fr;
+    gap: 16px;
     align-items: start;
 }
-.form-group.field-title.field-title_color > .row > [class*="col-"] {
+
+.form-group[class*="field-"] > .row > [class*="col-"] {
     width: auto !important;
     max-width: none !important;
     flex: none !important;
     padding: 0 !important;
 }
 
-/* Body + Body Color row */
-.form-group.field-body.field-body_color > .row {
-    display: grid !important;
-    grid-template-columns: 120px 1fr 100px 180px;
-    gap: 12px;
-    align-items: start;
-}
-.form-group.field-body.field-body_color > .row > [class*="col-"] {
-    width: auto !important;
-    max-width: none !important;
-    flex: none !important;
-    padding: 0 !important;
+/* Labels should be consistent */
+.form-group label {
+    font-weight: 500;
+    min-width: 100px;
 }
 
-/* CTA Text + CTA Action row */
+/* Single field rows (like background_color, image_url) */
+.form-group.field-background_color:not([class*=" field-"]) > .row,
+.form-group.field-image_url:not([class*=" field-"]) > .row,
+.form-group.field-target_apps:not([class*=" field-"]) > .row,
+.form-group.field-is_active:not([class*=" field-"]) > .row {
+    display: grid !important;
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+/* Color field rows - paired */
+.form-group.field-title.field-title_color > .row,
+.form-group.field-body.field-body_color > .row,
+.form-group.field-button_color.field-button_text_color > .row {
+    grid-template-columns: 130px 1fr 130px 200px;
+}
+
+/* CTA fields */
 .form-group.field-cta_text.field-cta_action > .row {
-    display: grid !important;
-    grid-template-columns: 120px 1fr 100px 1fr;
-    gap: 12px;
-    align-items: start;
-}
-.form-group.field-cta_text.field-cta_action > .row > [class*="col-"] {
-    width: auto !important;
-    max-width: none !important;
-    flex: none !important;
-    padding: 0 !important;
+    grid-template-columns: 130px 1fr 130px 1fr;
 }
 
-/* Message Type + Banner Position row */
-.form-group.field-message_type.field-banner_position > .row {
-    display: grid !important;
-    grid-template-columns: 120px 1fr 120px 1fr;
-    gap: 12px;
-    align-items: start;
-}
-.form-group.field-message_type.field-banner_position > .row > [class*="col-"] {
-    width: auto !important;
-    max-width: none !important;
-    flex: none !important;
-    padding: 0 !important;
-}
-
-/* Priority + Is Dismissible row */
-.form-group.field-priority.field-is_dismissible > .row {
-    display: grid !important;
-    grid-template-columns: 120px 1fr 120px auto;
-    gap: 12px;
-    align-items: start;
-}
-.form-group.field-priority.field-is_dismissible > .row > [class*="col-"] {
-    width: auto !important;
-    max-width: none !important;
-    flex: none !important;
-    padding: 0 !important;
-}
-
-/* Start Date + End Date row */
+/* Appearance fields */
+.form-group.field-message_type.field-banner_position > .row,
+.form-group.field-priority.field-is_dismissible > .row,
 .form-group.field-start_date.field-end_date > .row {
-    display: grid !important;
-    grid-template-columns: 120px 1fr 120px 1fr;
-    gap: 12px;
-    align-items: start;
-}
-.form-group.field-start_date.field-end_date > .row > [class*="col-"] {
-    width: auto !important;
-    max-width: none !important;
-    flex: none !important;
-    padding: 0 !important;
+    grid-template-columns: 130px 1fr 130px 1fr;
 }
 
 /* ========================================

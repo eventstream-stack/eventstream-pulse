@@ -8,8 +8,8 @@
 
     // Wait for DOM ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Only run on PulseMessage change form
-        if (!document.querySelector('#pulsemessage_form')) {
+        // Only run on PulseMessage change form (check for title field as indicator)
+        if (!document.querySelector('#id_title')) {
             return;
         }
 
@@ -28,7 +28,8 @@
             bgColor: document.querySelector('#id_background_color'),
             titleColor: document.querySelector('#id_title_color'),
             bodyColor: document.querySelector('#id_body_color'),
-            buttonColor: document.querySelector('#id_button_color')
+            buttonColor: document.querySelector('#id_button_color'),
+            buttonTextColor: document.querySelector('#id_button_text_color')
         };
 
         // Get preview elements
@@ -41,15 +42,13 @@
             typeIndicator: document.querySelector('.preview-type-indicator')
         };
 
-        // Exit if preview panel doesn't exist yet
+        // Skip preview updates if panel doesn't exist
         if (!preview.message) {
+            console.log('Preview panel not found - skipping preview initialization');
             return;
         }
 
-        // Add color picker enhancements to color fields
-        enhanceColorFields(fields);
-
-        // Set up event listeners
+        // Set up event listeners on all form fields
         Object.values(fields).forEach(field => {
             if (field) {
                 field.addEventListener('input', () => updatePreview(fields, preview));
@@ -57,60 +56,19 @@
             }
         });
 
+        // Also listen for color picker changes (they have _picker suffix)
+        ['background_color', 'title_color', 'body_color', 'button_color', 'button_text_color'].forEach(fieldName => {
+            const picker = document.querySelector('#id_' + fieldName + '_picker');
+            if (picker) {
+                picker.addEventListener('input', () => updatePreview(fields, preview));
+                picker.addEventListener('change', () => updatePreview(fields, preview));
+            }
+        });
+
         // Initial preview update
         updatePreview(fields, preview);
-    }
 
-    function enhanceColorFields(fields) {
-        const colorFields = [
-            { field: fields.bgColor, defaultColor: '#FFFFFF' },
-            { field: fields.titleColor, defaultColor: '#1a1a1a' },
-            { field: fields.bodyColor, defaultColor: '#666666' },
-            { field: fields.buttonColor, defaultColor: '#007AFF' }
-        ];
-
-        colorFields.forEach(({ field, defaultColor }) => {
-            if (!field) return;
-
-            const fieldBox = field.closest('.fieldBox');
-            if (!fieldBox) return;
-
-            // Skip if already enhanced
-            if (field.dataset.colorEnhanced === 'true') return;
-            field.dataset.colorEnhanced = 'true';
-
-            // CLEANUP: Remove any wrapper divs from old code
-            fieldBox.querySelectorAll('.color-picker-wrapper').forEach(wrapper => {
-                while (wrapper.firstChild) {
-                    wrapper.parentNode.insertBefore(wrapper.firstChild, wrapper);
-                }
-                wrapper.remove();
-            });
-
-            // CLEANUP: Remove any existing color inputs
-            fieldBox.querySelectorAll('input[type="color"]').forEach(el => el.remove());
-
-            // Create fresh color input
-            const colorInput = document.createElement('input');
-            colorInput.type = 'color';
-            colorInput.className = 'color-swatch';
-            colorInput.value = field.value || defaultColor;
-
-            // Sync bidirectionally
-            colorInput.addEventListener('input', function() {
-                field.value = this.value;
-                field.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-
-            field.addEventListener('input', function() {
-                if (/^#[0-9A-Fa-f]{6}$/i.test(this.value)) {
-                    colorInput.value = this.value;
-                }
-            });
-
-            // Insert BEFORE the text field
-            field.insertAdjacentElement('beforebegin', colorInput);
-        });
+        console.log('Preview initialized successfully');
     }
 
     function updatePreview(fields, preview) {
@@ -127,33 +85,39 @@
             preview.button.style.display = ctaText ? 'block' : 'none';
         }
 
-        // Update colors
-        if (fields.bgColor?.value && preview.message) {
-            preview.message.style.backgroundColor = fields.bgColor.value;
-        } else if (preview.message) {
-            preview.message.style.backgroundColor = '#FFFFFF';
+        // Update background color
+        if (preview.message) {
+            const bgColor = fields.bgColor?.value;
+            preview.message.style.backgroundColor = bgColor || '#FFFFFF';
         }
 
-        if (fields.titleColor?.value && preview.title) {
-            preview.title.style.color = fields.titleColor.value;
-        } else if (preview.title) {
-            preview.title.style.color = '#1a1a1a';
+        // Update title color
+        if (preview.title) {
+            const titleColor = fields.titleColor?.value;
+            preview.title.style.color = titleColor || '#1a1a1a';
         }
 
-        if (fields.bodyColor?.value && preview.body) {
-            preview.body.style.color = fields.bodyColor.value;
-        } else if (preview.body) {
-            preview.body.style.color = '#666666';
+        // Update body color
+        if (preview.body) {
+            const bodyColor = fields.bodyColor?.value;
+            preview.body.style.color = bodyColor || '#666666';
         }
 
-        if (fields.buttonColor?.value && preview.button) {
-            preview.button.style.backgroundColor = fields.buttonColor.value;
-            // Calculate contrasting text color
-            const textColor = getContrastColor(fields.buttonColor.value);
-            preview.button.style.color = textColor;
-        } else if (preview.button) {
-            preview.button.style.backgroundColor = '#007AFF';
-            preview.button.style.color = '#FFFFFF';
+        // Update button colors
+        if (preview.button) {
+            const buttonBgColor = fields.buttonColor?.value;
+            const buttonTxtColor = fields.buttonTextColor?.value;
+
+            preview.button.style.backgroundColor = buttonBgColor || '#007AFF';
+
+            // Use explicit button text color if set, otherwise calculate contrast
+            if (buttonTxtColor) {
+                preview.button.style.color = buttonTxtColor;
+            } else if (buttonBgColor) {
+                preview.button.style.color = getContrastColor(buttonBgColor);
+            } else {
+                preview.button.style.color = '#FFFFFF';
+            }
         }
 
         // Update image
@@ -177,11 +141,9 @@
         }
     }
 
-    function isValidHexColor(color) {
-        return /^#[0-9A-Fa-f]{6}$/.test(color);
-    }
-
     function getContrastColor(hexColor) {
+        if (!hexColor || hexColor.length < 7) return '#FFFFFF';
+
         // Remove # if present
         const hex = hexColor.replace('#', '');
 

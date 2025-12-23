@@ -29,6 +29,7 @@ class PulseMessageSerializer(serializers.ModelSerializer):
             'title_color',
             'body_color',
             'button_color',
+            'button_text_color',
             'target_app_ids',
             'start_date',
             'end_date',

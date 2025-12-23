@@ -4,7 +4,9 @@ from django.utils.html import format_html
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.conf import settings
 from .models import PulseMessage, TargetApp
+from .forms import PulseMessageAdminForm
 
 
 admin.site.site_header = "Eventstream Pulse Admin"
@@ -22,6 +24,7 @@ class TargetAppAdmin(admin.ModelAdmin):
 
 @admin.register(PulseMessage)
 class PulseMessageAdmin(admin.ModelAdmin):
+    form = PulseMessageAdminForm
     list_display = (
         'title',
         'message_type',
@@ -67,7 +70,7 @@ class PulseMessageAdmin(admin.ModelAdmin):
         ('Call to Action', {
             'fields': (
                 ('cta_text', 'cta_action'),
-                'button_color',
+                ('button_color', 'button_text_color'),
             ),
         }),
         ('Appearance', {
@@ -159,10 +162,11 @@ class PulseMessageAdmin(admin.ModelAdmin):
         """Show a test link in list view."""
         first_app = obj.target_apps.first()
         if first_app:
+            token = getattr(settings, 'API_TOKEN', 'pulse_dev_token')
             return format_html(
-                '<a href="/api/messages/?app_id={}&token=pulse_dev_token" target="_blank" '
+                '<a href="/api/messages/?app_id={}&token={}" target="_blank" '
                 'style="font-size: 11px;">Test API</a>',
-                first_app.app_id
+                first_app.app_id, token
             )
         return '-'
     get_test_link.short_description = 'Test'
@@ -176,12 +180,14 @@ class PulseMessageAdmin(admin.ModelAdmin):
         if not apps:
             return "No target apps selected."
 
+        token = getattr(settings, 'API_TOKEN', 'pulse_dev_token')
         urls = []
         for app in apps:
             urls.append(
                 f'<strong>{app.app_name}:</strong><br>'
-                f'<code style="background: #f4f4f4; padding: 2px 6px; font-size: 12px;">'
-                f'/api/messages/?app_id={app.app_id}&token=YOUR_TOKEN</code>'
+                f'<a href="/api/messages/?app_id={app.app_id}&token={token}" target="_blank" '
+                f'style="background: #f4f4f4; padding: 2px 6px; font-size: 12px;">'
+                f'/api/messages/?app_id={app.app_id}&token={token}</a>'
             )
         return format_html('<br><br>'.join(urls))
     get_api_test_urls.short_description = 'API Test URLs'

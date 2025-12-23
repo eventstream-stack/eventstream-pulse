@@ -1,0 +1,15 @@
+<div style="display: flex; align-items: center; gap: 8px;">
+    <input type="color"
+           class="color-swatch"
+           id="{{ widget.attrs.id }}_picker"
+           value="{% if widget.value %}{{ widget.value }}{% else %}#FFFFFF{% endif %}"
+           onchange="var txt = document.getElementById('{{ widget.attrs.id }}'); txt.value = this.value; txt.dispatchEvent(new Event('input', {bubbles: true})); txt.dispatchEvent(new Event('change', {bubbles: true}));"
+           style="width: 36px; height: 36px; padding: 2px; border: 2px solid #ccc; border-radius: 6px; cursor: pointer; background: none;">
+    <input type="text"
+           name="{{ widget.name }}"
+           id="{{ widget.attrs.id }}"
+           value="{% if widget.value %}{{ widget.value }}{% endif %}"
+           placeholder="#FFFFFF"
+           style="width: 90px; padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px;"
+           oninput="var picker = document.getElementById('{{ widget.attrs.id }}_picker'); if(/^#[0-9A-Fa-f]{6}$/i.test(this.value)) picker.value = this.value;">
+</div>

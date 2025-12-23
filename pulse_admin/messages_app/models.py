@@ -144,7 +144,14 @@ class PulseMessage(models.Model):
         blank=True,
         default='',
         verbose_name="Button Color",
-        help_text="Hex color like #FF5733"
+        help_text="Button background color"
+    )
+    button_text_color = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        verbose_name="Button Text",
+        help_text="Button text color"
     )
 
     # Targeting
