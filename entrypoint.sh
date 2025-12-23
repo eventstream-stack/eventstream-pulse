@@ -12,6 +12,10 @@ echo "Database is ready!"
 echo "Running migrations..."
 python manage.py migrate --noinput
 
+# Collect static files (must run at startup so files go into mounted volume)
+echo "Collecting static files..."
+python manage.py collectstatic --noinput
+
 # Start server
 echo "Starting server..."
 exec gunicorn --bind 0.0.0.0:8000 pulse_admin.wsgi:application --workers 3

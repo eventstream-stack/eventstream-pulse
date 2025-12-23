@@ -18,10 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY pulse_admin/ .
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
-
-# Copy entrypoint
+# Copy entrypoint (collectstatic runs at startup to populate mounted volume)
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
