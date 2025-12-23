@@ -21,8 +21,15 @@ class PulseModal extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Parse custom colors from message, with fallbacks
+    final bgColor = message.backgroundColorParsed;
+    final titleTextColor = message.titleColorParsed;
+    final bodyTextColor = message.bodyColorParsed ?? Colors.grey[700];
+    final btnColor = message.buttonColorParsed;
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: bgColor,
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400),
         child: Column(
@@ -59,9 +66,10 @@ class PulseModal extends ConsumerWidget {
                 children: [
                   Text(
                     message.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
+                      color: titleTextColor,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -69,7 +77,7 @@ class PulseModal extends ConsumerWidget {
                     message.body,
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.grey[700],
+                      color: bodyTextColor,
                     ),
                   ),
                 ],
@@ -93,7 +101,7 @@ class PulseModal extends ConsumerWidget {
                       },
                       child: Text(
                         'Dismiss',
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(color: bodyTextColor?.withOpacity(0.7)),
                       ),
                     ),
                   if (message.hasCta) ...[
@@ -108,6 +116,7 @@ class PulseModal extends ConsumerWidget {
                         _handleCtaAction(context, message.ctaAction);
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: btnColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

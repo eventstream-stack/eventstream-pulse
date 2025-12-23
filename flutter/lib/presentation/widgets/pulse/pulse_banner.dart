@@ -67,13 +67,18 @@ class _PulseBannerState extends ConsumerState<PulseBanner>
 
   @override
   Widget build(BuildContext context) {
+    // Parse custom colors from message, with fallbacks
+    final bgColor = widget.message.backgroundColorParsed ?? Theme.of(context).cardColor;
+    final titleTextColor = widget.message.titleColorParsed;
+    final bodyTextColor = widget.message.bodyColorParsed ?? Colors.grey[600];
+
     return SlideTransition(
       position: _slideAnimation,
       child: SafeArea(
         child: Container(
           margin: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
+            color: bgColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -107,9 +112,10 @@ class _PulseBannerState extends ConsumerState<PulseBanner>
                         children: [
                           Text(
                             widget.message.title,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
+                              color: titleTextColor,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -119,7 +125,7 @@ class _PulseBannerState extends ConsumerState<PulseBanner>
                             widget.message.body,
                             style: TextStyle(
                               fontSize: 13,
-                              color: Colors.grey[600],
+                              color: bodyTextColor,
                             ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -133,7 +139,7 @@ class _PulseBannerState extends ConsumerState<PulseBanner>
                         icon: Icon(
                           Icons.close,
                           size: 20,
-                          color: Colors.grey[500],
+                          color: bodyTextColor,
                         ),
                       ),
                   ],

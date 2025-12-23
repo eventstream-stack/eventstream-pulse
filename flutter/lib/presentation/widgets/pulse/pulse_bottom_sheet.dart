@@ -21,6 +21,12 @@ class PulseBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Parse custom colors from message, with fallbacks
+    final bgColor = message.backgroundColorParsed ?? Theme.of(context).scaffoldBackgroundColor;
+    final titleTextColor = message.titleColorParsed;
+    final bodyTextColor = message.bodyColorParsed ?? Colors.grey[700];
+    final btnColor = message.buttonColorParsed;
+
     // Record impression when shown
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(pulseMessagesProvider.notifier).recordImpression(message.id);
@@ -28,7 +34,7 @@ class PulseBottomSheet extends ConsumerWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: bgColor,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: SafeArea(
@@ -43,7 +49,7 @@ class PulseBottomSheet extends ConsumerWidget {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: (bodyTextColor ?? Colors.grey[700])!.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -81,9 +87,10 @@ class PulseBottomSheet extends ConsumerWidget {
                 children: [
                   Text(
                     message.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
+                      color: titleTextColor,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -91,7 +98,7 @@ class PulseBottomSheet extends ConsumerWidget {
                     message.body,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey[700],
+                      color: bodyTextColor,
                       height: 1.4,
                     ),
                   ),
@@ -116,6 +123,7 @@ class PulseBottomSheet extends ConsumerWidget {
                         _handleCtaAction(context, message.ctaAction);
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: btnColor,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -138,7 +146,7 @@ class PulseBottomSheet extends ConsumerWidget {
                       },
                       child: Text(
                         'Dismiss',
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(color: bodyTextColor?.withOpacity(0.7)),
                       ),
                     ),
                   ],

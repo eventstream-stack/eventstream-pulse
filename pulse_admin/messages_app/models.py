@@ -48,14 +48,31 @@ class PulseMessage(models.Model):
         (4, 'Low - Background'),
     ]
 
+    COLOR_PRESETS = [
+        ('', 'Default (Theme)'),
+        ('#FFFFFF', 'White'),
+        ('#000000', 'Black'),
+        ('#1a1a1a', 'Dark Gray'),
+        ('#6C757D', 'Gray'),
+        ('#007BFF', 'Blue'),
+        ('#28A745', 'Green'),
+        ('#DC3545', 'Red'),
+        ('#800080', 'Purple'),
+        ('#17A2B8', 'Cyan'),
+        ('#FFC107', 'Yellow'),
+        ('#F8F9FA', 'Light Gray'),
+    ]
+
     # Core Content
     title = models.CharField(
         max_length=100,
         validators=[MinLengthValidator(3)],
+        verbose_name="Title (20px Bold)",
         help_text="Main heading of the message (3-100 chars)"
     )
     body = models.TextField(
         validators=[MaxLengthValidator(1000)],
+        verbose_name="Body (15px)",
         help_text="Message body content (max 1000 chars)"
     )
     image_url = models.URLField(
@@ -98,6 +115,36 @@ class PulseMessage(models.Model):
     is_dismissible = models.BooleanField(
         default=True,
         help_text="Can users dismiss this message?"
+    )
+
+    # Styling
+    background_color = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        verbose_name="Background",
+        help_text="Hex color like #FF5733"
+    )
+    title_color = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        verbose_name="Title Color",
+        help_text="Hex color like #FF5733"
+    )
+    body_color = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        verbose_name="Body Color",
+        help_text="Hex color like #FF5733"
+    )
+    button_color = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        verbose_name="Button Color",
+        help_text="Hex color like #FF5733"
     )
 
     # Targeting

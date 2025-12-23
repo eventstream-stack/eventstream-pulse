@@ -1,0 +1,319 @@
+/* Pulse Message Admin - Professional Editor Styles */
+
+/* ========================================
+   Two-column layout: preview on LEFT, form on right
+   ======================================== */
+.message-editor-container {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+}
+
+.message-form {
+    flex: 1;
+    min-width: 0;
+}
+
+.message-preview-panel {
+    width: 340px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+.message-preview-panel h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* ========================================
+   Phone mockup styling
+   ======================================== */
+.phone-mockup {
+    background: #1a1a1a;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.phone-notch {
+    width: 100px;
+    height: 24px;
+    background: #1a1a1a;
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.phone-screen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 28px;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.phone-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(0,0,0,0.1);
+}
+
+/* ========================================
+   Preview message styles
+   ======================================== */
+.preview-message {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+#preview-image {
+    margin: -20px -20px 16px -20px;
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+}
+
+#preview-image img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+}
+
+#preview-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+#preview-body {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+#preview-button {
+    display: block;
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    background: #007AFF;
+    color: white;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+#preview-button:hover {
+    transform: scale(1.02);
+}
+
+#preview-button:empty {
+    display: none;
+}
+
+.preview-type-indicator {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   FIX: Paired field rows using CSS Grid
+   Only apply to rows with TWO fields (has two field- classes)
+   ======================================== */
+
+/* Title + Title Color row */
+.form-group.field-title.field-title_color > .row {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 100px 180px;
+    gap: 12px;
+    align-items: start;
+}
+.form-group.field-title.field-title_color > .row > [class*="col-"] {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    padding: 0 !important;
+}
+
+/* Body + Body Color row */
+.form-group.field-body.field-body_color > .row {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 100px 180px;
+    gap: 12px;
+    align-items: start;
+}
+.form-group.field-body.field-body_color > .row > [class*="col-"] {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    padding: 0 !important;
+}
+
+/* CTA Text + CTA Action row */
+.form-group.field-cta_text.field-cta_action > .row {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 100px 1fr;
+    gap: 12px;
+    align-items: start;
+}
+.form-group.field-cta_text.field-cta_action > .row > [class*="col-"] {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    padding: 0 !important;
+}
+
+/* Message Type + Banner Position row */
+.form-group.field-message_type.field-banner_position > .row {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 120px 1fr;
+    gap: 12px;
+    align-items: start;
+}
+.form-group.field-message_type.field-banner_position > .row > [class*="col-"] {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    padding: 0 !important;
+}
+
+/* Priority + Is Dismissible row */
+.form-group.field-priority.field-is_dismissible > .row {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 120px auto;
+    gap: 12px;
+    align-items: start;
+}
+.form-group.field-priority.field-is_dismissible > .row > [class*="col-"] {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    padding: 0 !important;
+}
+
+/* Start Date + End Date row */
+.form-group.field-start_date.field-end_date > .row {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 120px 1fr;
+    gap: 12px;
+    align-items: start;
+}
+.form-group.field-start_date.field-end_date > .row > [class*="col-"] {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    padding: 0 !important;
+}
+
+/* ========================================
+   Color field fieldBox - flex for inline picker
+   ======================================== */
+.fieldBox.field-title_color,
+.fieldBox.field-body_color,
+.fieldBox.field-button_color,
+.fieldBox.field-background_color {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+/* Constrain color text input width */
+.fieldBox.field-title_color input[type="text"],
+.fieldBox.field-body_color input[type="text"],
+.fieldBox.field-button_color input[type="text"],
+.fieldBox.field-background_color input[type="text"] {
+    width: 100px !important;
+    min-width: 80px;
+}
+
+/* Hide verbose help text on color fields */
+.fieldBox.field-title_color .help-block,
+.fieldBox.field-body_color .help-block,
+.fieldBox.field-button_color .help-block,
+.fieldBox.field-background_color .help-block {
+    display: none;
+}
+
+/* ========================================
+   Color picker swatch styling
+   ======================================== */
+input[type="color"].color-swatch {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    background: none;
+}
+
+input[type="color"].color-swatch:hover {
+    border-color: #007bff;
+}
+
+input[type="color"].color-swatch::-webkit-color-swatch-wrapper {
+    padding: 2px;
+}
+
+input[type="color"].color-swatch::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+/* ========================================
+   Responsive adjustments
+   ======================================== */
+@media (max-width: 1200px) {
+    .message-editor-container {
+        flex-direction: column;
+    }
+
+    .message-preview-panel {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto 24px auto;
+        position: static;
+        order: -1;
+    }
+}
+
+/* Hide preview panel on list view */
+body.change-list .message-preview-panel {
+    display: none;
+}

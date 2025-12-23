@@ -35,6 +35,17 @@ class _PulseFullScreenState extends ConsumerState<PulseFullScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Parse custom colors from message, with full-screen appropriate defaults
+    final bgColor = widget.message.backgroundColorParsed ?? Theme.of(context).primaryColor;
+    final titleTextColor = widget.message.titleColorParsed ?? Colors.white;
+    final bodyTextColor = widget.message.bodyColorParsed ?? Colors.white;
+    final btnColor = widget.message.buttonColorParsed ?? Colors.white;
+
+    // Calculate button text color for contrast
+    final btnTextColor = btnColor.computeLuminance() > 0.5
+        ? Colors.black87
+        : Colors.white;
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -45,10 +56,10 @@ class _PulseFullScreenState extends ConsumerState<PulseFullScreen> {
               imageUrl: widget.message.imageUrl!,
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
-                color: Theme.of(context).primaryColor,
+                color: bgColor,
               ),
               errorWidget: (context, url, error) => Container(
-                color: Theme.of(context).primaryColor,
+                color: bgColor,
               ),
             )
           else
@@ -58,8 +69,8 @@ class _PulseFullScreenState extends ConsumerState<PulseFullScreen> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withOpacity(0.8),
+                    bgColor,
+                    bgColor.withOpacity(0.8),
                   ],
                 ),
               ),
@@ -98,9 +109,9 @@ class _PulseFullScreenState extends ConsumerState<PulseFullScreen> {
                     color: Colors.black.withOpacity(0.3),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: titleTextColor,
                     size: 24,
                   ),
                 ),
@@ -118,19 +129,19 @@ class _PulseFullScreenState extends ConsumerState<PulseFullScreen> {
               children: [
                 Text(
                   widget.message.title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: titleTextColor,
                     height: 1.2,
                   ),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   widget.message.body,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white,
+                    color: bodyTextColor,
                     height: 1.5,
                   ),
                 ),
@@ -150,8 +161,8 @@ class _PulseFullScreenState extends ConsumerState<PulseFullScreen> {
                         _handleCtaAction(context, widget.message.ctaAction);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Theme.of(context).primaryColor,
+                        backgroundColor: btnColor,
+                        foregroundColor: btnTextColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -179,10 +190,10 @@ class _PulseFullScreenState extends ConsumerState<PulseFullScreen> {
                         Navigator.of(context).pop();
                         widget.onDismiss?.call();
                       },
-                      child: const Text(
+                      child: Text(
                         'Maybe later',
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: bodyTextColor.withOpacity(0.7),
                           fontSize: 16,
                         ),
                       ),

@@ -1,0 +1,38 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/message_admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="message-editor-container">
+    <!-- Left: Form -->
+    <div class="message-form">
+        {{ block.super }}
+    </div>
+
+    <!-- Right: Live Preview -->
+    <div class="message-preview-panel">
+        <h3>Live Preview</h3>
+        <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+                <div id="preview-message" class="preview-message">
+                    <div id="preview-image"></div>
+                    <div id="preview-title">Your Title Here</div>
+                    <div id="preview-body">Your message body text will appear here...</div>
+                    <button id="preview-button">Button</button>
+                </div>
+                <div class="preview-type-indicator">Modal</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script src="{% static 'admin/js/message_preview.js' %}"></script>
+{% endblock %}

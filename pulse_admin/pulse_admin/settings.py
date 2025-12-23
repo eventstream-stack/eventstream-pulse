@@ -140,7 +140,7 @@ JAZZMIN_SETTINGS = {
     'default_icon_children': 'fas fa-circle',
     'related_modal_active': True,
     'use_google_fonts_cdn': True,
-    'changeform_format': 'horizontal_tabs',
+    'changeform_format': 'single',
     'show_ui_builder': True,
 }
 
