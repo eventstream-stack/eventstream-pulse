@@ -28,7 +28,7 @@ python manage.py runserver
 ```bash
 docker compose pull                    # Pull latest from Docker Hub
 docker compose down && docker compose up -d
-docker compose exec web python manage.py migrate
+# Migrations run automatically at startup via entrypoint.sh
 ```
 
 ### Database Operations
@@ -74,8 +74,10 @@ Django Admin → PostgreSQL → REST API → Flutter Apps
 | `pulse_admin/messages_app/models.py` | PulseMessage, TargetApp models with MESSAGE_TYPES and PRIORITY_LEVELS |
 | `pulse_admin/messages_app/views.py` | ActiveMessagesView, RecordImpressionView, RecordTapView |
 | `pulse_admin/messages_app/serializers.py` | DRF serializers for API responses |
-| `pulse_admin/messages_app/admin.py` | Jazzmin admin with status badges |
+| `pulse_admin/messages_app/admin.py` | Jazzmin admin with status badges and live preview |
+| `pulse_admin/messages_app/forms.py` | Custom admin form with ColorWidget for color pickers |
 | `pulse_admin/pulse_admin/settings.py` | Django settings, Jazzmin config, database switching |
+| `entrypoint.sh` | Container startup script (runs migrations and collectstatic) |
 | `flutter/lib/` | Flutter integration files for city apps |
 
 ## Environment Variables

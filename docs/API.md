@@ -48,6 +48,11 @@ curl "https://monitor.eventstream.tech/api/messages/?app_id=brighton&token=your_
     "banner_position": "top",
     "priority": 2,
     "is_dismissible": true,
+    "background_color": "#FFFFFF",
+    "title_color": "#1a1a1a",
+    "body_color": "#666666",
+    "button_color": "#007AFF",
+    "button_text_color": "#FFFFFF",
     "target_app_ids": ["brighton"],
     "start_date": "2025-01-01T00:00:00Z",
     "end_date": "2025-02-01T00:00:00Z",
@@ -72,6 +77,11 @@ curl "https://monitor.eventstream.tech/api/messages/?app_id=brighton&token=your_
 | `banner_position` | string | `top` or `bottom` (for banner type) |
 | `priority` | integer | 1-4 (1 = highest priority) |
 | `is_dismissible` | boolean | Can user dismiss the message? |
+| `background_color` | string | Message background color (hex) |
+| `title_color` | string | Title text color (hex) |
+| `body_color` | string | Body text color (hex) |
+| `button_color` | string | CTA button background color (hex) |
+| `button_text_color` | string | CTA button text color (hex) |
 | `target_app_ids` | array | List of targeted app IDs |
 | `start_date` | datetime | When message becomes active |
 | `end_date` | datetime | When message expires (null = never) |

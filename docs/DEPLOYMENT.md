@@ -71,14 +71,12 @@ cp .env.example .env
 # Start services
 docker compose up -d
 
-# Initialize database
-docker compose exec web python manage.py migrate
+# Initialize database (migrations run automatically at startup)
 docker compose exec web python manage.py seed_apps
 docker compose exec web python manage.py createsuperuser
-
-# Collect static files
-docker compose exec web python manage.py collectstatic --noinput
 ```
+
+**Note:** The entrypoint script automatically runs `migrate` and `collectstatic` on container startup, so you only need to run `seed_apps` and `createsuperuser` manually.
 
 ### Updating Production
 
@@ -132,9 +130,14 @@ u.save()
 
 ### Static Files Not Loading (No CSS)
 
+Static files are collected automatically on container startup. If files are missing:
+
 ```bash
-docker compose exec web python manage.py collectstatic --noinput
+# Restart container to re-run collectstatic
 docker compose restart web
+
+# Or manually collect if needed
+docker compose exec web python manage.py collectstatic --noinput
 ```
 
 ### Can't Connect to Database
