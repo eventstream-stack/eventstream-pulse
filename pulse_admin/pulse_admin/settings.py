@@ -5,6 +5,8 @@ Django settings for Eventstream Pulse.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from django.templatetags.static import static
+from django.urls import reverse_lazy
 
 load_dotenv()
 
@@ -18,7 +20,8 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
 INSTALLED_APPS = [
-    'jazzmin',
+    'unfold',
+    'unfold.contrib.filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,64 +117,72 @@ CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000'
 # API Token
 API_TOKEN = os.getenv('API_TOKEN', 'pulse_dev_token')
 
-# Jazzmin admin configuration
-JAZZMIN_SETTINGS = {
-    'site_title': 'Pulse Admin',
-    'site_header': 'Eventstream Pulse',
-    'site_brand': 'Pulse',
-    'welcome_sign': 'Welcome to Eventstream Pulse',
-    'copyright': 'Eventstream',
-    'search_model': ['messages_app.PulseMessage'],
-    'topmenu_links': [
-        {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},
+# Django Unfold admin configuration
+UNFOLD = {
+    "SITE_TITLE": "Pulse Admin",
+    "SITE_HEADER": "Eventstream Pulse",
+    "SITE_SUBHEADER": "Centralized In-App Messaging",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+    "STYLES": [
+        lambda request: static("admin/css/message_admin_unfold.css"),
     ],
-    'show_sidebar': True,
-    'navigation_expanded': True,
-    'icons': {
-        'auth': 'fas fa-users-cog',
-        'auth.user': 'fas fa-user',
-        'auth.Group': 'fas fa-users',
-        'messages_app.PulseMessage': 'fas fa-envelope',
-        'messages_app.TargetApp': 'fas fa-mobile-alt',
-        'analytics.MessageImpression': 'fas fa-eye',
-        'analytics.MessageTap': 'fas fa-hand-pointer',
-    },
-    'default_icon_parents': 'fas fa-chevron-circle-right',
-    'default_icon_children': 'fas fa-circle',
-    'related_modal_active': True,
-    'use_google_fonts_cdn': True,
-    'changeform_format': 'single',
-    'show_ui_builder': True,
-}
-
-JAZZMIN_UI_TWEAKS = {
-    'navbar_small_text': False,
-    'footer_small_text': False,
-    'body_small_text': False,
-    'brand_small_text': False,
-    'brand_colour': 'navbar-dark',
-    'accent': 'accent-primary',
-    'navbar': 'navbar-dark',
-    'no_navbar_border': False,
-    'navbar_fixed': False,
-    'layout_boxed': False,
-    'footer_fixed': False,
-    'sidebar_fixed': False,
-    'sidebar': 'sidebar-dark-primary',
-    'sidebar_nav_small_text': False,
-    'sidebar_disable_expand': False,
-    'sidebar_nav_child_indent': False,
-    'sidebar_nav_compact_style': False,
-    'sidebar_nav_legacy_style': False,
-    'sidebar_nav_flat_style': False,
-    'theme': 'default',
-    'dark_mode_theme': None,
-    'button_classes': {
-        'primary': 'btn-primary',
-        'secondary': 'btn-secondary',
-        'info': 'btn-info',
-        'warning': 'btn-warning',
-        'danger': 'btn-danger',
-        'success': 'btn-success',
+    "SCRIPTS": [
+        lambda request: static("admin/js/message_preview.js"),
+    ],
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": "Messaging",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Pulse Messages",
+                        "icon": "mail",
+                        "link": reverse_lazy("admin:messages_app_pulsemessage_changelist"),
+                    },
+                    {
+                        "title": "Target Apps",
+                        "icon": "smartphone",
+                        "link": reverse_lazy("admin:messages_app_targetapp_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Analytics",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Impressions",
+                        "icon": "visibility",
+                        "link": reverse_lazy("admin:analytics_messageimpression_changelist"),
+                    },
+                    {
+                        "title": "Taps",
+                        "icon": "touch_app",
+                        "link": reverse_lazy("admin:analytics_messagetap_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Authentication",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Users",
+                        "icon": "person",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                    },
+                    {
+                        "title": "Groups",
+                        "icon": "group",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+        ],
     },
 }

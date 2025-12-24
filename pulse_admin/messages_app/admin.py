@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.conf import settings
+from unfold.admin import ModelAdmin
 from .models import PulseMessage, TargetApp
 from .forms import PulseMessageAdminForm
 
@@ -15,7 +16,7 @@ admin.site.index_title = "Centralized In-App Messaging"
 
 
 @admin.register(TargetApp)
-class TargetAppAdmin(admin.ModelAdmin):
+class TargetAppAdmin(ModelAdmin):
     list_display = ('app_name', 'app_id', 'is_active', 'created_at')
     list_filter = ('is_active',)
     search_fields = ('app_name', 'app_id')
@@ -23,7 +24,7 @@ class TargetAppAdmin(admin.ModelAdmin):
 
 
 @admin.register(PulseMessage)
-class PulseMessageAdmin(admin.ModelAdmin):
+class PulseMessageAdmin(ModelAdmin):
     form = PulseMessageAdminForm
     list_display = (
         'title',
@@ -95,7 +96,7 @@ class PulseMessageAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            'all': ('admin/css/message_admin.css',)
+            'all': ('admin/css/message_admin_unfold.css',)
         }
         js = ('admin/js/message_preview.js',)
 

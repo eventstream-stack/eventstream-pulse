@@ -1,9 +1,10 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import MessageImpression, MessageTap
 
 
 @admin.register(MessageImpression)
-class MessageImpressionAdmin(admin.ModelAdmin):
+class MessageImpressionAdmin(ModelAdmin):
     list_display = ('message', 'app_id', 'timestamp')
     list_filter = ('app_id', 'timestamp', 'message')
     search_fields = ('message__title', 'app_id')
@@ -12,7 +13,7 @@ class MessageImpressionAdmin(admin.ModelAdmin):
 
 
 @admin.register(MessageTap)
-class MessageTapAdmin(admin.ModelAdmin):
+class MessageTapAdmin(ModelAdmin):
     list_display = ('message', 'app_id', 'timestamp')
     list_filter = ('app_id', 'timestamp', 'message')
     search_fields = ('message__title', 'app_id')
