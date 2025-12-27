@@ -25,6 +25,7 @@
             ctaText: document.querySelector('#id_cta_text'),
             ctaAction: document.querySelector('#id_cta_action'),
             messageType: document.querySelector('#id_message_type'),
+            bannerPosition: document.querySelector('#id_banner_position'),
             bgColor: document.querySelector('#id_background_color'),
             titleColor: document.querySelector('#id_title_color'),
             bodyColor: document.querySelector('#id_body_color'),
@@ -39,7 +40,8 @@
             button: document.querySelector('#preview-button'),
             message: document.querySelector('#preview-message'),
             image: document.querySelector('#preview-image'),
-            typeIndicator: document.querySelector('.preview-type-indicator')
+            typeIndicator: document.querySelector('.preview-type-indicator'),
+            phoneMockup: document.querySelector('.phone-mockup')
         };
 
         // Skip preview updates if panel doesn't exist
@@ -132,15 +134,35 @@
             }
         }
 
-        // Update message type indicator
-        if (preview.typeIndicator && fields.messageType) {
-            const typeMap = {
-                'modal': 'Modal',
-                'banner': 'Banner',
-                'bottom_sheet': 'Bottom Sheet',
-                'full_screen': 'Full Screen'
-            };
-            preview.typeIndicator.textContent = typeMap[fields.messageType.value] || 'Modal';
+        // Update message type indicator and layout
+        if (fields.messageType) {
+            const messageType = fields.messageType.value || 'modal';
+
+            // Update text indicator
+            if (preview.typeIndicator) {
+                const typeMap = {
+                    'modal': 'Modal',
+                    'banner': 'Banner',
+                    'bottom_sheet': 'Bottom Sheet',
+                    'full_screen': 'Full Screen'
+                };
+                preview.typeIndicator.textContent = typeMap[messageType] || 'Modal';
+            }
+
+            // Toggle layout classes on phone mockup
+            if (preview.phoneMockup) {
+                preview.phoneMockup.classList.remove('type-modal', 'type-banner', 'type-bottom_sheet', 'type-full_screen', 'banner-top', 'banner-bottom');
+                preview.phoneMockup.classList.add('type-' + messageType);
+
+                // For banner, check position (default to top)
+                if (messageType === 'banner') {
+                    if (fields.bannerPosition && fields.bannerPosition.value === 'bottom') {
+                        preview.phoneMockup.classList.add('banner-bottom');
+                    } else {
+                        preview.phoneMockup.classList.add('banner-top');
+                    }
+                }
+            }
         }
     }
 
