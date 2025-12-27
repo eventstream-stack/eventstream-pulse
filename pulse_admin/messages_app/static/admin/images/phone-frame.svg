@@ -1,0 +1,33 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='422' height='850' fill='none' viewBox='0 0 422 850'>
+  <g filter='url(#a)'>
+    <path fill='white' fill-rule='evenodd' d='M70.334 6.044h281.334c35.416 0 64.127 27.955 64.127 62.44v713.034c0 34.485-28.711 62.44-64.127 62.44H70.334c-35.416 0-64.127-27.955-64.127-62.44V68.484c0-34.485 28.71-62.44 64.127-62.44Z' clip-rule='evenodd'/>
+  </g>
+  <path fill='#CBD1D7' d='M21 68.358C21 41.651 43.191 20 70.565 20h280.87C378.809 20 401 41.65 401 68.358v713.284C401 808.349 378.809 830 351.435 830H70.565C43.191 830 21 808.349 21 781.642V68.358Z'/>
+  <g filter='url(#b)'>
+    <path fill='#F6F7F8' fill-rule='evenodd' d='M351.667 6.043H70.333c-35.416 0-64.127 27.955-64.127 62.44v713.034c0 34.485 28.71 62.44 64.127 62.44h281.334c35.416 0 64.127-27.955 64.127-62.44V68.483c0-34.485-28.711-62.44-64.127-62.44ZM70.333 0C31.49 0 0 30.661 0 68.483v713.034C0 819.339 31.49 850 70.333 850h281.334C390.511 850 422 819.339 422 781.517V68.483C422 30.661 390.511 0 351.667 0H70.333Z' clip-rule='evenodd'/>
+  </g>
+  <rect width='120.036' height='22.507' x='150.982' y='37.511' fill='white' rx='11.253'/>
+  <defs>
+    <filter id='a' width='409.588' height='840.915' x='6.207' y='6.044' color-interpolation-filters='sRGB' filterUnits='userSpaceOnUse'>
+      <feFlood flood-opacity='0' result='BackgroundImageFix'/>
+      <feBlend in='SourceGraphic' in2='BackgroundImageFix' result='shape'/>
+      <feColorMatrix in='SourceAlpha' result='hardAlpha' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'/>
+      <feMorphology in='SourceAlpha' radius='5' result='effect1_innerShadow_7166_16363'/>
+      <feOffset dy='3'/>
+      <feGaussianBlur stdDeviation='4'/>
+      <feComposite in2='hardAlpha' k2='-1' k3='1' operator='arithmetic'/>
+      <feColorMatrix values='0 0 0 0 0.796078 0 0 0 0 0.819608 0 0 0 0 0.843137 0 0 0 0.4 0'/>
+      <feBlend in2='shape' result='effect1_innerShadow_7166_16363'/>
+    </filter>
+    <filter id='b' width='422' height='850' x='0' y='0' color-interpolation-filters='sRGB' filterUnits='userSpaceOnUse'>
+      <feFlood flood-opacity='0' result='BackgroundImageFix'/>
+      <feBlend in='SourceGraphic' in2='BackgroundImageFix' result='shape'/>
+      <feColorMatrix in='SourceAlpha' result='hardAlpha' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'/>
+      <feOffset/>
+      <feGaussianBlur stdDeviation='2.5'/>
+      <feComposite in2='hardAlpha' k2='-1' k3='1' operator='arithmetic'/>
+      <feColorMatrix values='0 0 0 0 0.364706 0 0 0 0 0.411765 0 0 0 0 0.454902 0 0 0 0.3 0'/>
+      <feBlend in2='shape' result='effect1_innerShadow_7166_16363'/>
+    </filter>
+  </defs>
+</svg>
