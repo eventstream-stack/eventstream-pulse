@@ -97,18 +97,13 @@
             preview.title.style.color = titleColor || '#1a1a1a';
         }
 
-        // Update body color - auto-calculate if not set
+        // Update body color - always ensure readable contrast
         if (preview.body) {
-            const bodyColor = fields.bodyColor?.value;
             const bgColor = fields.bgColor?.value || '#FFFFFF';
-            if (bodyColor) {
-                preview.body.style.color = bodyColor;
-            } else {
-                // Auto-calculate readable body color based on background
-                const contrastBase = getContrastColor(bgColor);
-                // Use slightly muted version for body (not pure black/white)
-                preview.body.style.color = contrastBase === '#000000' ? '#444444' : '#CCCCCC';
-            }
+            // Always auto-calculate readable body color based on background
+            const contrastBase = getContrastColor(bgColor);
+            // Use slightly muted version for body (not pure black/white)
+            preview.body.style.color = contrastBase === '#000000' ? '#444444' : '#CCCCCC';
         }
 
         // Update button colors
