@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'messages_app',
     'analytics',
+    'api_keys',
 ]
 
 MIDDLEWARE = [
@@ -180,6 +181,17 @@ UNFOLD = {
                         "title": "Groups",
                         "icon": "group",
                         "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Security",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "API Keys",
+                        "icon": "key",
+                        "link": reverse_lazy("admin:api_keys_apikey_changelist"),
                     },
                 ],
             },
